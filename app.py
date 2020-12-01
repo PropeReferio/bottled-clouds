@@ -11,9 +11,8 @@ print('api_key:', api_key)
 def temperature():
 	if 'zip' in request.form:
 		zipcode = request.form['zip']
-		r = requests.get(f'http://api.openweathermap.org/data/2.5/weather?zip={zipcode},us&appid={api_key}')
-		return r.text
-		return render_template('temperature.html', f"{kelvin_to_fahr(r):.1f}")
+		r = requests.get(f'http://api.openweathermap.org/data/2.5/weather?zip={zipcode},us&appid={api_key}').json()
+		return render_template('temperature.html', temp=f"{kelvin_to_fahr(r):.1f}")
 	
 	elif 'city' in request.form and 'state' in request.form:
 		city = request.form['city']
